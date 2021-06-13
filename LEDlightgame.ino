@@ -9,6 +9,16 @@
 #define ledwin2 39
 #define ledwin1 38
 
+int rs= 53;
+int en= 51;
+int d4= 49;
+int d5= 47;
+int d6= 45;
+int d7= 43;
+LiquidCrystal lcd(rs,en,d4,d5,d6,d7);
+
+int player1score = 0;
+int player2score = 0;
 
 unsigned long previousMillis = 0;
 const long interval = 250;
@@ -17,6 +27,16 @@ void setup(){
   // button inputs
   pinMode(button1, INPUT);
   pinMode(button2, INPUT);
+
+  // lcd setup
+  lcd.begin(16,2);
+  lcd.setCursor(0,0);
+  lcd.print("Player 1: ");
+  lcd.print(player1score);
+    
+  lcd.setCursor(0,1);
+  lcd.print("Player 2: ");
+  lcd.print(player2score);
 
   // led outputs 
   pinMode(led1, OUTPUT);
@@ -96,6 +116,16 @@ void button1_check(int button1currentstate){
     digitalWrite(ledwin1, LOW);
     delay(250);
     }
+
+  player1score = player1score + 1;
+  lcd.setCursor(0,0);
+  lcd.print("Player 1: ");
+  lcd.print(player1score);
+  
+  lcd.setCursor(0,1);
+  lcd.print("Player 2: ");
+  lcd.print(player2score);
+
   }
 }
 
@@ -114,8 +144,18 @@ void button2_check(int button2currentstate){
     digitalWrite(ledwin2, LOW);
     delay(250);
     }
+
+    player2score = player2score + 1;
+    lcd.setCursor(0,0);
+    lcd.print("Player 1: ");
+    lcd.print(player1score);
+    
+    lcd.setCursor(0,1);
+    lcd.print("Player 2: ");
+    lcd.print(player2score);
   }
 }
+
 
 void led_blink(){
       if (led1currentstate == 0){
